@@ -24,8 +24,8 @@ yaf.use_spl_autoload=1
 $ git clone https://github.com/overtrue/yaf-skeleton.git myapp
 ```
 
-3. Web server Rewrite rules:
-    
+3. Web server rewrite rules:
+   
     #### Apache
     
     ```conf
