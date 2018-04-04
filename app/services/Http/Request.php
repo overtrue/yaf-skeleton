@@ -99,6 +99,16 @@ class Request
     }
 
     /**
+     * TODO 未完成
+     *
+     * @return [type] [description]
+     */
+    public function filter ()
+    {
+
+    }
+
+    /**
      * 获取上传文件.
      *
      * @param string $name

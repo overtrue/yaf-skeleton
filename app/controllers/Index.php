@@ -21,6 +21,8 @@ class IndexController extends BaseController
      */
     public function handle()
     {
-        return 'It works!';
+        $msg = Yaf\Registry::get('config');
+
+        return 'It works! ' . $msg->app_name;
     }
 }

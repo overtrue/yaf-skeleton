@@ -135,6 +135,10 @@ abstract class Facade
             return static::$resolvedInstance[$name];
         }
 
+        if (\Yaf\Registry::has($name)) {
+            return \Yaf\Registry::get($name);
+        }
+
         return static::$resolvedInstance[$name] = new $name();
     }
 

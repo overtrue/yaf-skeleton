@@ -11,7 +11,7 @@
 
 use App\Exceptions\ApiException;
 use App\Presenters\PresenterInterface;
-use App\Traits\ApiRequest;
+// use App\Traits\ApiRequest;
 use Yaf\Controller_Abstract as YafController;
 
 /**
@@ -21,7 +21,8 @@ use Yaf\Controller_Abstract as YafController;
  */
 abstract class BaseController extends YafController
 {
-    use ApiRequest;
+    // TODO 未上传内容
+    // use ApiRequest;
 
     /**
      * Headers.
@@ -110,9 +111,10 @@ abstract class BaseController extends YafController
             $response = $response->toArray();
         }
 
-        if ($this->responseHasError($response)) {
-            throw new ApiException($response);
-        }
+        //TODO 需要解决
+        // if ($this->responseHasError($response)) {
+            // throw new ApiException($response);
+        // }
 
         send_response($response, 200, $this->headers);
 
