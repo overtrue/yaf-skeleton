@@ -1,6 +1,6 @@
 <h1 align="center">Yaf skeleton</h1>
 
-<p align="center">The Yaf skeleton.</p>
+<p align="center">The Yaf testable skeleton and composer supported.</p>
 
 # Requirement
 
