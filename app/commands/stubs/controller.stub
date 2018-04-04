@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * class {{controller}}.
+ *
+ * @author {{username}} <{{email}}>
+ */
+class {{controller}} extends BaseController
+{
+    public function handle()
+    {
+        return 'This controller is incomplete.';
+    }
+}

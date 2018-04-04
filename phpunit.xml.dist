@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="tests/bootstrap.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="false">
+    <testsuites>
+        <testsuite name="Application Test Suite">
+            <directory>./tests/</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <const name="TESTING" value="true"/>
+    </php>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">app/</directory>
+            <exclude>
+                <directory>app/commands/</directory>
+                <directory>app/plugins/</directory>
+                <file>app/Bootstrap.php</file>
+                <file>app/controllers/Index.php</file>
+                <file>app/helpers.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

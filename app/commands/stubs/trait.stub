@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * Test for Trait: {{trait_fullname}}.
+ *
+ * @author {{username}} <{{email}}>
+ */
+class {{trait}}Test extends TestCase
+{
+    /**
+     * 测试示例
+     */
+    public function testExample()
+    {
+        $trait = mock_trait(\{{trait_fullname}}::class, ['foo', 'bar']); // 这里填写你需要 mock 的方法名
+
+        // $result = $trait->xxxxx();
+        // $this->assertSame('It works!', $result);
+
+        // 完成后删除这行
+        $this->markTestIncomplete();
+    }
+}

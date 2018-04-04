@@ -1,0 +1,25 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Sora command line tool.
+ *
+ * @author overtrue <i@overtrue.me>
+ */
+
+require __DIR__.'/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use App\Commands;
+
+define('BASE_PATH', __DIR__);
+
+$application = new Application();
+$application->add(new Commands\HelloCommand());
+$application->add(new Commands\MakeTestCommand());
+$application->add(new Commands\MakeTraitTestCommand());
+$application->add(new Commands\MakeControllerCommand());
+$application->add(new Commands\TestCommand());
+$application->add(new Commands\CodeStyleCommand());
+$application->add(new Commands\CodeBeautifierAndFixerCommand());
+$application->run();

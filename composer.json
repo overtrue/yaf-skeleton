@@ -1,0 +1,49 @@
+{
+    "name": "overtrue/yaf-skeleton",
+    "description": "The Yaf skeleton.",
+    "authors": [
+        {
+            "name": "overtrue",
+            "email": "i@overtrue.me"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "": "app/facades",
+            "App\\Commands\\":"app/commands",
+            "App\\Services\\":"app/services",
+            "App\\Presenters\\":"app/presenters",
+            "App\\Traits\\":"app/traits",
+            "App\\Exceptions\\":"app/exceptions"
+        },
+        "files":["app/helpers.php"]
+    },
+    "autoload-dev": {
+        "classmap": ["./app"]
+    },
+    "require": {
+        "php": ">=7.0",
+        "ext-yaf": "*",
+        "ext-yaconf":"*"
+    },
+    "require-dev": {
+        "mockery/mockery": "~1.0",
+        "symfony/var-dumper":"~3.0",
+        "filp/whoops": "~2.1@stable",
+        "friendsofphp/php-cs-fixer": "~1.8@stable",
+        "squizlabs/php_codesniffer": "3.0.x-dev",
+        "phpmd/phpmd": "~2.6@stable",
+        "sebastian/phpcpd": "~2.0@stable",
+        "sebastian/phpdcd": "~1.0@stable",
+        "overtrue/phplint": "dev-master",
+        "phpunit/phpunit": "~6.0"
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "optimize-autoload": true,
+        "preferred-install": {
+            "*": "dist"
+        }
+    },
+    "license": "MIT"
+}
