@@ -24,40 +24,40 @@ $ git clone https://github.com/overtrue/yaf-skeleton.git myapp
 ```
 
 3. Web server Rewrite rules:
-
-#### Apache
-
-```conf
-#.htaccess
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule .* index.php
-```
-
-#### Nginx
-
-```
-server {
-  listen 80;
-  server_name  myapp.com;
-  root   /path/to/myapp;
-  index  index.php index.html index.htm;
- 
-  if (!-e $request_filename) {
-    rewrite ^/(.*)  /index.php/$1 last;
-  }
-}
-```
-
-#### Lighttpd
-
-```
-$HTTP["host"] =~ "(www.)?myapp.com$" {
-  url.rewrite = (
-     "^/(.+)/?$"  => "/index.php/$1",
-  )
-}
-```
+    
+    #### Apache
+    
+    ```conf
+    #.htaccess
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule .* index.php
+    ```
+    
+    #### Nginx
+    
+    ```
+    server {
+      listen 80;
+      server_name  myapp.com;
+      root   /path/to/myapp;
+      index  index.php index.html index.htm;
+     
+      if (!-e $request_filename) {
+        rewrite ^/(.*)  /index.php/$1 last;
+      }
+    }
+    ```
+    
+    #### Lighttpd
+    
+    ```
+    $HTTP["host"] =~ "(www.)?myapp.com$" {
+      url.rewrite = (
+         "^/(.+)/?$"  => "/index.php/$1",
+      )
+    }
+    ```
 
 
 # Application structor
@@ -83,17 +83,17 @@ $HTTP["host"] =~ "(www.)?myapp.com$" {
 │   ├── helpers.php             # Herlpers
 │   ├── Bootstrap.php           # Yaf Bootstrap file
 ├── config
-│   ├── application.ini     # Yaf config fike
+│   ├── application.ini     # Yaf config file
 ├── public                  # web extrence
 │   └── index.php
 ├── sora                    # The command line tool
 ├── tests                   # Unit tests
 └── vendor                  # 
-├── phpunit.xml.dist        # PHPUniy config file
+├── phpunit.xml.dist        # PHPUnit config file
 ├── .gitignore
 ├── .php_cs                 # PHP-CS-Fixer config file
-├── composer.json           # Composer 
-├── composer.lock           # Composer 
+├── composer.json            
+├── composer.lock            
 ├── README.md
 ```
 
