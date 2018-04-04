@@ -11,6 +11,7 @@
 
 use Yaf\Bootstrap_Abstract as YafBootstrap;
 use Yaf\Dispatcher;
+use Yaf\Registry as YafRegistry;
 
 /**
  * Class Bootstrap.
@@ -29,6 +30,28 @@ class Bootstrap extends YafBootstrap
         date_default_timezone_set('PRC');
         $dispatcher->returnResponse(true);
         $dispatcher->disableView();
+    }
+
+    /**
+     * autoload
+     *
+     * @param  Dispatcher $dispatcher [description]
+     */
+    public function _initLoader(Dispatcher $dispatcher)
+    {
+        $loader = \Yaf\Loader::getInstance();
+        $loader->import(ROOT_PATH . '/vendor/autoload.php');
+    }
+
+    /**
+     * Config file init
+     *
+     * @param  Dispatcher $dispatcher [description]
+     */
+    public function _initConfig(Dispatcher $dispatcher)
+    {
+        // example
+        YafRegistry::set('config', new Yaf\Config\Ini(ROOT_PATH . '/config/config.ini'));
     }
 
     /**
