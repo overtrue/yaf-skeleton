@@ -14,6 +14,7 @@
 ```init
 [yaf]
 yaf.use_namespace=1
+yaf.use_spl_autoload=1
 ...
 ```
 
