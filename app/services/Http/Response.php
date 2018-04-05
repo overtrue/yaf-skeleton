@@ -13,6 +13,7 @@ namespace App\Services\Http;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Yaf\Response\Http;
 
 /**
  * PSR-7 response implementation.
@@ -89,6 +90,9 @@ class Response implements ResponseInterface
     /** @var int */
     private $statusCode = 200;
 
+    /** @var Http */
+    protected $yafResponse = null;
+
     /**
      * @var string
      */
@@ -117,6 +121,20 @@ class Response implements ResponseInterface
         }
 
         $this->protocol = $version;
+    }
+
+    /**
+     * 嵌入yaf原生Response，会影响本类渲染返回内容的逻辑
+     *
+     * @param Http $response
+     *
+     * @return $this
+     */
+    public function setYafResponse(Http $response)
+    {
+        $this->yafResponse = $response;
+
+        return $this;
     }
 
     /**
@@ -177,14 +195,27 @@ class Response implements ResponseInterface
             return $this;
         }
 
-        // headers
-        foreach ($this->headers as $name => $values) {
-            foreach ($values as $value) {
-                header($name.': '.$value, false, $this->statusCode);
+        if ($this->yafResponse) {
+            // headers
+            foreach ($this->headers as $name => $values) {
+                foreach ($values as $value) {
+                    $this->yafResponse->setHeader($name, $value, false, $this->statusCode);
+                }
+            }
+
+        } else {
+            // headers
+            foreach ($this->headers as $name => $values) {
+                foreach ($values as $value) {
+                    header($name.': '.$value, false, $this->statusCode);
+                }
             }
         }
+
         // status
         header(sprintf('HTTP/%s %s %s', $this->version, $this->statusCode, $this->getReasonPhrase()), true, $this->statusCode);
+
+        return $this;
     }
 
     /**
@@ -194,7 +225,11 @@ class Response implements ResponseInterface
      */
     public function sendContent()
     {
-        echo $this->stream;
+        if ($this->yafResponse) {
+            $this->yafResponse->appendBody($this->stream);
+        } else {
+            echo $this->stream;
+        }
 
         return $this;
     }
@@ -209,7 +244,7 @@ class Response implements ResponseInterface
         $this->sendHeaders();
         $this->sendContent();
 
-        if (function_exists('fastcgi_finish_request')) {
+        if (!$this->yafResponse && function_exists('fastcgi_finish_request')) {
             fastcgi_finish_request();
         }
 

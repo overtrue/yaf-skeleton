@@ -9,6 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
+use Yaf\Response\Http;
 use App\Exceptions\ErrorException;
 use App\Services\Http\Response;
 use Psr\Http\Message\ResponseInterface;
@@ -17,7 +18,7 @@ use Psr\Http\Message\ResponseInterface;
  * Config 类的别名方法.
  *
  * @param string $property
- * @param mixed  $default
+ * @param mixed $default
  *
  * @return mixed
  */
@@ -33,43 +34,80 @@ function config($property, $default = null)
 }
 
 /**
+ * api 应答公共格式化函数
+ *
+ * @param string $message
+ * @param int $code
+ * @param null $data
+ *
+ * @return array
+ */
+function api_return($message, $code = 0, $data = null)
+{
+    $result = [
+        'code' => $code,
+        'msg' => $message
+    ];
+
+    if (!is_null($data)) {
+        $result['data'] = $data;
+    }
+
+    return $result;
+}
+
+/**
+ * 相应json格式的应答
+ *
+ * @param Http $httpResponse
+ * @param $body
+ * @param int $status
+ * @param array $headers
+ */
+function json_response(Http $httpResponse, $body, $status = 200, $headers = [])
+{
+    $headers = array_merge([
+        'content-type' => 'application/json;charset=utf-8',
+    ], $headers);
+
+    send_response($httpResponse, $body, $status, $headers);
+}
+
+/**
  * 输出响应内容.
  *
+ * @param Http|null $httpResponse
  * @param array|string|ResponseInterface $body
- * @param int                            $status
- * @param array                          $headers
+ * @param int $status
+ * @param array $headers
  */
-function send_response($body, $status = 200, $headers = [])
+function send_response(Http $httpResponse, $body, $status = 200, $headers = [])
 {
     if (defined('TESTING')) {
         return;
     }
 
-    $headers = array_merge([
-        'content-type' => 'application/json;charset=utf-8',
-    ], $headers);
-
-    if (!($body instanceof Response)) {
+    if (!($body instanceof ResponseInterface)) {
         $body = new Response($status, $headers, $body);
     }
 
+    // 融合
+    $body->setYafResponse($httpResponse);
     $body->send();
-
-    exit;
 }
 
 /**
  * 停止并抛出异常.
  *
  * @param string|array $message
- * @param int          $code
+ * @param int $code
  *
  * @throws ErrorException
  */
 function abort($message = '系统错误', $code = 500)
 {
     if (is_array($message)) {
-        $error = $message['error'] ?? false;
+        $error = isset($message['error']) ? $message['error'] : false;
         $message = $error && is_string($error) ? $error : '未知错误';
     }
 
@@ -117,7 +155,7 @@ function mdd(...$args)
  * Debug 日志.
  *
  * @param string $message
- * @param array  $context
+ * @param array $context
  */
 function debug($message, $context = [])
 {

@@ -9,7 +9,6 @@
  * with this source code in the file LICENSE.
  */
 
-use App\Exceptions\ApiException;
 use App\Presenters\PresenterInterface;
 use Yaf\Controller_Abstract as YafController;
 
@@ -57,7 +56,7 @@ abstract class BaseController extends YafController
      *
      * @return $this
      */
-    public function header(string $header)
+    public function header($header)
     {
         $this->headers[] = $header;
 
@@ -91,11 +90,9 @@ abstract class BaseController extends YafController
     /**
      * 处理响应内容.
      *
-     * @param mixed $response
+     * @param callable|array|string|\Psr\Http\Message\ResponseInterface $response
      *
-     * @return string
-     *
-     * @throws ApiException
+     * @return mixed
      */
     protected function handleResponse($response)
     {
@@ -107,12 +104,13 @@ abstract class BaseController extends YafController
             $response = $response->toArray();
         }
 
-        //TODO 需要解决
-        // if ($this->responseHasError($response)) {
-            // throw new ApiException($response);
-        // }
-
-        send_response($response, 200, $this->headers);
+        call_user_func(
+            is_array($response) ? 'json_response' : 'send_response',
+            $this->getResponse(),
+            $response,
+            200,
+            $this->headers
+        );
 
         return $response;
     }
