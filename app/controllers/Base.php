@@ -11,7 +11,6 @@
 
 use App\Exceptions\ApiException;
 use App\Presenters\PresenterInterface;
-// use App\Traits\ApiRequest;
 use Yaf\Controller_Abstract as YafController;
 
 /**
@@ -21,9 +20,6 @@ use Yaf\Controller_Abstract as YafController;
  */
 abstract class BaseController extends YafController
 {
-    // TODO 未上传内容
-    // use ApiRequest;
-
     /**
      * Headers.
      *
