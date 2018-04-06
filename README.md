@@ -122,7 +122,7 @@ $ ./sora make:test Foo_Bar # Also supports multiple type controller names
 
 ### The handle() method
 
-The controller entry method is： `handle()`:
+The controller entry method `handle()`:
 
 ```php
 <?php
