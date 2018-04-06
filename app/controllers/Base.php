@@ -11,6 +11,7 @@
 
 use App\Exceptions\ApiException;
 use App\Presenters\PresenterInterface;
+use App\Services\Http\Response;
 use Psr\Http\Message\ResponseInterface;
 use Yaf\Controller_Abstract as YafController;
 
@@ -108,12 +109,17 @@ abstract class BaseController extends YafController
             $response = $response->toArray();
         }
 
+        if (is_array($response)) {
+            $response = json_encode($response);
+            $this->header('Content-Type: application/json;charset=utf-8');
+        }
+
         if (defined('TESTING')) {
             return;
         }
 
         if (!($response instanceof ResponseInterface)) {
-            $response = new Response(200, $headers, $response);
+            $response = new Response(200, $this->headers, $response);
         }
 
         $response->send();

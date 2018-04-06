@@ -23,6 +23,6 @@ class IndexController extends BaseController
     {
         $config = config('app');
 
-        return view('welcome', $config);
+        return $config;
     }
 }
