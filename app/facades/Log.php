@@ -29,6 +29,6 @@ class Log extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return App\Services\Logger::class;
+        return \App\Services\Logger::class;
     }
 }

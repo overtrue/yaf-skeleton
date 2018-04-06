@@ -55,6 +55,19 @@ class Bootstrap extends YafBootstrap
     }
 
     /**
+     * 日志启动器
+     * @param Dispatcher $dispatcher
+     */
+    public function _initLogger(Dispatcher $dispatcher)
+    {
+        $log = new \App\Services\Logger('yaf');
+
+        //$log->setHandlers();
+
+        YafRegistry::set(\App\Services\Logger::class, $log);
+    }
+
+    /**
      * 注册插件.
      *
      * @param Dispatcher $dispatcher
