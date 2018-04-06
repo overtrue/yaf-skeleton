@@ -28,7 +28,9 @@ class ExceptionHandlerPlugin extends YafPlugin
      */
     public function preDispatch(YafRequest $request, YafResponse $response)
     {
-        set_exception_handler([$this, 'exceptionHandler']);
+        set_exception_handler(function ($e) use ($request, $response) {
+            $this->exceptionHandler($e, $request, $response);
+        });
     }
 
     /**
@@ -36,17 +38,17 @@ class ExceptionHandlerPlugin extends YafPlugin
      *
      * @param Throwable $e
      */
-    public function exceptionHandler(Throwable $e)
+    public function exceptionHandler(Throwable $e, $yafRequest, $yafResponse)
     {
+        //需要注意返回的是浏览器展示的异常，还是api展示的异常
         if ($e instanceof JsonSerializable) {
             $response = $e;
         } else {
-            $response = [
-                'error_code' => $e->getCode(),
-                'error' => $e->getMessage(),
-            ];
+            $response = api_return($e->getMessage(), $e->getCode());
         }
 
-        send_response($response, 200);
+        send_response($yafResponse, $response, 200);
+
+        $yafResponse->response();
     }
 }
