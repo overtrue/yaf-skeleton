@@ -23,6 +23,6 @@ class IndexController extends BaseController
     {
         $config = config('app');
 
-        return $config;
+        return redirect('https://easywechat.com');
     }
 }

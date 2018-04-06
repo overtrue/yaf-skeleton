@@ -15,8 +15,6 @@ use Psr\Http\Message\StreamInterface;
 
 /**
  * Trait implementing functionality common to requests and responses.
- *
- * @author Fabien Potencier <fabien@symfony.com>
  */
 trait MessageTrait
 {

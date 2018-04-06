@@ -179,7 +179,7 @@ class Response implements ResponseInterface
 
         // headers
         foreach ($this->headers as $name => $values) {
-            foreach ($values as $value) {
+            foreach ((array)$values as $value) {
                 header($name.': '.$value, false, $this->statusCode);
             }
         }
@@ -214,5 +214,17 @@ class Response implements ResponseInterface
         }
 
         return $this;
+    }
+
+    /**
+     * Is the response a redirect of some form?
+     *
+     * @param string|null $location
+     *
+     * @return bool
+     */
+    public function isRedirect(string $location = null)
+    {
+        return in_array($this->statusCode, array(201, 301, 302, 303, 307, 308)) && (null === $location ?: $location == $this->headers['Location']);
     }
 }

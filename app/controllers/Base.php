@@ -55,13 +55,14 @@ abstract class BaseController extends YafController
     /**
      * 添加 header.
      *
-     * @param string $header
+     * @param string $name
+     * @param mixed  $value
      *
      * @return $this
      */
-    public function header(string $header)
+    public function header(string $name, $value)
     {
-        $this->headers[] = $header;
+        $this->headers[$name] = $value;
 
         return $this;
     }

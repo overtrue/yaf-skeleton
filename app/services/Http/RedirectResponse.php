@@ -13,8 +13,6 @@ namespace App\Services\Http;
 
 /**
  * RedirectResponse represents an HTTP response doing a redirect.
- *
- * @author Fabien Potencier <fabien@symfony.com>
  */
 class RedirectResponse extends Response
 {
@@ -34,7 +32,7 @@ class RedirectResponse extends Response
      */
     public function __construct(string $url, int $status = 302, array $headers = [])
     {
-        parent::__construct('', $status, $headers);
+        parent::__construct($status, $headers);
 
         $this->setTargetUrl($url);
 
@@ -43,7 +41,7 @@ class RedirectResponse extends Response
         }
 
         if (301 == $status && !array_key_exists('cache-control', $headers)) {
-            $this->headers->remove('cache-control');
+            unset($this->headers['cache-control']);
         }
     }
 
@@ -88,8 +86,7 @@ class RedirectResponse extends Response
 
         $this->targetUrl = $url;
 
-        $this->setContent(
-            sprintf('<!DOCTYPE html>
+        $this->stream = sprintf('<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8" />
@@ -100,9 +97,9 @@ class RedirectResponse extends Response
     <body>
         Redirecting to <a href="%1$s">%1$s</a>.
     </body>
-</html>', htmlspecialchars($url, ENT_QUOTES, 'UTF-8')));
+</html>', htmlspecialchars($url, ENT_QUOTES, 'UTF-8'));
 
-        $this->headers->set('Location', $url);
+        $this->headers['Location'] = $url;
 
         return $this;
     }

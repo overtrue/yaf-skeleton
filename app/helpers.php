@@ -42,7 +42,7 @@ function view(string $template, array $data)
 {
     $body = Registry::get('services.view')->render($template, (array) $data);
 
-    return new Response(200, ['text/html;charset=utf-8'], $body);
+    return new Response(200, ['content-type' => 'text/html;charset=utf-8'], $body);
 }
 
 /**
@@ -52,7 +52,7 @@ function view(string $template, array $data)
  */
 function json($data)
 {
-    return new Response(200, ['application/json;charset=utf-8'], json_encode($data));
+    return new Response(200, ['content-type' => 'application/json;charset=utf-8'], json_encode($data));
 }
 
 /**
