@@ -13,7 +13,7 @@ namespace App\Services\Http;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Yaf\Response\Http;
+use Yaf\Response\Http as YafResponse;
 
 /**
  * PSR-7 response implementation.
@@ -130,12 +130,13 @@ class Response implements ResponseInterface
     }
 
     /**
-     * 设置 YafResponse
+     * 设置 YafResponse.
      *
-     * @param $yafResponse
+     * @param \Yaf\Response\Http $yafResponse
+     *
      * @return $this
      */
-    public function setYafResponse(Http $yafResponse)
+    public function setYafResponse(YafResponse $yafResponse)
     {
         $this->yafResponse = $yafResponse;
 
@@ -200,18 +201,12 @@ class Response implements ResponseInterface
             return $this;
         }
 
-        if ($this->yafResponse) {
-            // headers
-            foreach ($this->headers as $name => $values) {
-                foreach ((array) $values as $value) {
+        // headers
+        foreach ($this->headers as $name => $values) {
+            foreach ((array) $values as $value) {
+                if ($this->yafResponse) {
                     $this->yafResponse->setHeader($name, $value, false, $this->statusCode);
-                }
-            }
-
-        } else {
-            // headers
-            foreach ($this->headers as $name => $values) {
-                foreach ((array) $values as $value) {
+                } else {
                     header($name.': '.$value, false, $this->statusCode);
                 }
             }
@@ -259,6 +254,6 @@ class Response implements ResponseInterface
      */
     public function isRedirect(string $location = null)
     {
-        return in_array($this->statusCode, array(201, 301, 302, 303, 307, 308)) && (null === $location ?: $location == $this->headers['Location']);
+        return in_array($this->statusCode, [201, 301, 302, 303, 307, 308]) && (null === $location ?: $location == $this->headers['Location']);
     }
 }

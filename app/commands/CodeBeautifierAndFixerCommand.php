@@ -20,7 +20,6 @@ use Symfony\Component\Process\Process;
  */
 class CodeBeautifierAndFixerCommand extends Command
 {
-
     protected $name = 'cbf';
     protected $description = '修复代码规范.';
 
@@ -49,8 +48,6 @@ class CodeBeautifierAndFixerCommand extends Command
         if (empty($suffix)) {
             $suffix = './app';
         }
-
-        $this->checkAndInstallAppStandard($phpcbf);
 
         $commands = [
             "$phpcbf --ignore=app/Bootstrap.php,app/Commands/ $suffix",
