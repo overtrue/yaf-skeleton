@@ -19,16 +19,16 @@ use Psr\Http\Message\StreamInterface;
 trait MessageTrait
 {
     /** @var array Map of all registered headers, as original name => array of values */
-    private $headers = [];
+    protected $headers = [];
 
     /** @var array Map of lowercase header name => original name at registration */
-    private $headerNames = [];
+    protected $headerNames = [];
 
     /** @var string */
-    private $protocol = '1.1';
+    protected $protocol = '1.1';
 
     /** @var StreamInterface */
-    private $stream;
+    protected $stream;
 
     /**
      * @return string

@@ -10,6 +10,8 @@
  */
 
 use App\Presenters\PresenterInterface;
+use App\Services\Http\Response;
+use Psr\Http\Message\ResponseInterface;
 use Yaf\Controller_Abstract as YafController;
 
 /**
@@ -52,13 +54,14 @@ abstract class BaseController extends YafController
     /**
      * 添加 header.
      *
-     * @param string $header
+     * @param string $name
+     * @param mixed  $value
      *
      * @return $this
      */
-    public function header($header)
+    public function header(string $name, $value)
     {
-        $this->headers[] = $header;
+        $this->headers[$name] = $value;
 
         return $this;
     }
@@ -104,13 +107,22 @@ abstract class BaseController extends YafController
             $response = $response->toArray();
         }
 
-        call_user_func(
-            is_array($response) ? 'json_response' : 'send_response',
-            $this->getResponse(),
-            $response,
-            200,
-            $this->headers
-        );
+        if (is_array($response)) {
+            $response = json_encode($response);
+            $this->header('Content-Type: application/json;charset=utf-8');
+        }
+
+        if (defined('TESTING')) {
+            return;
+        }
+
+        if (!($response instanceof ResponseInterface)) {
+            $response = new Response(200, $this->headers, $response);
+        }
+
+        //兼容Yaf的Response输出逻辑
+        $response->setYafResponse($this->getResponse());
+        $response->send();
 
         return $response;
     }

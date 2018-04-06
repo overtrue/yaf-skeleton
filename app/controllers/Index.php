@@ -17,12 +17,12 @@
 class IndexController extends BaseController
 {
     /**
-     * @return string
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function handle()
     {
-        $msg = Yaf\Registry::get('config');
+        $config = config('app');
 
-        return 'It works! ' . $msg->app_name;
+        return redirect('https://easywechat.com');
     }
 }

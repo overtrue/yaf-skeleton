@@ -19,7 +19,7 @@ class Registry extends Facade
     /**
      * 允许的命名空间.
      */
-    const NAMESPACES = ['session', 'setting', 'routing', 'http', 'testing'];
+    const NAMESPACES = ['services', 'session', 'setting', 'routing', 'http', 'testing'];
 
     /**
      * 设定变量.

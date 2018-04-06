@@ -9,16 +9,15 @@
  * with this source code in the file LICENSE.
  */
 
-use Yaf\Response\Http;
 use App\Exceptions\ErrorException;
+use App\Services\Http\RedirectResponse;
 use App\Services\Http\Response;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Config 类的别名方法.
  *
  * @param string $property
- * @param mixed $default
+ * @param mixed  $default
  *
  * @return mixed
  */
@@ -34,80 +33,50 @@ function config($property, $default = null)
 }
 
 /**
- * api 应答公共格式化函数
+ * @param string $template
+ * @param array  $data
  *
- * @param string $message
- * @param int $code
- * @param null $data
- *
- * @return array
+ * @return string
  */
-function api_return($message, $code = 0, $data = null)
+function view(string $template, array $data)
 {
-    $result = [
-        'code' => $code,
-        'msg' => $message
-    ];
+    $body = Registry::get('services.view')->render($template, (array) $data);
 
-    if (!is_null($data)) {
-        $result['data'] = $data;
-    }
-
-    return $result;
+    return new Response(200, ['content-type' => 'text/html;charset=utf-8'], $body);
 }
 
 /**
- * 相应json格式的应答
+ * @param array|object|string $data
  *
- * @param Http $httpResponse
- * @param $body
- * @param int $status
- * @param array $headers
+ * @return \App\Services\Http\Response
  */
-function json_response(Http $httpResponse, $body, $status = 200, $headers = [])
+function json($data)
 {
-    $headers = array_merge([
-        'content-type' => 'application/json;charset=utf-8',
-    ], $headers);
-
-    send_response($httpResponse, $body, $status, $headers);
+    return new Response(200, ['content-type' => 'application/json;charset=utf-8'], json_encode($data));
 }
 
 /**
- * 输出响应内容.
+ * @param string $targetUrl
  *
- * @param Http|null $httpResponse
- * @param array|string|ResponseInterface $body
- * @param int $status
- * @param array $headers
+ * @return \App\Services\Http\RedirectResponse
  */
-function send_response(Http $httpResponse, $body, $status = 200, $headers = [])
+function redirect(string $targetUrl)
 {
-    if (defined('TESTING')) {
-        return;
-    }
-
-    if (!($body instanceof ResponseInterface)) {
-        $body = new Response($status, $headers, $body);
-    }
-
-    // 融合
-    $body->setYafResponse($httpResponse);
-    $body->send();
+    return new RedirectResponse($targetUrl);
 }
 
 /**
  * 停止并抛出异常.
  *
  * @param string|array $message
- * @param int $code
+ * @param int          $code
  *
  * @throws ErrorException
  */
 function abort($message = '系统错误', $code = 500)
 {
     if (is_array($message)) {
-        $error = isset($message['error']) ? $message['error'] : false;
+        $error = $message['error'] ?? false;
         $message = $error && is_string($error) ? $error : '未知错误';
     }
 
@@ -155,7 +124,7 @@ function mdd(...$args)
  * Debug 日志.
  *
  * @param string $message
- * @param array $context
+ * @param array  $context
  */
 function debug($message, $context = [])
 {

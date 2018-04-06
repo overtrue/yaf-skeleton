@@ -6,7 +6,6 @@
 
 - PHP >= 7.0
 - Yaf >= 3.0
-- Yac >= 2.0
 
 # Installation
 
@@ -18,10 +17,10 @@ yaf.use_spl_autoload=1
 ...
 ```
 
-2. Clone the repo to your www directory.
+2. Create project.
 
 ```shell
-$ git clone https://github.com/overtrue/yaf-skeleton.git myapp
+$ composer create-project overtrue/yaf-skeleton myapp -vvv
 ```
 
 3. Web server rewrite rules:
@@ -80,7 +79,8 @@ $ git clone https://github.com/overtrue/yaf-skeleton.git myapp
 │   ├── plugins                 # Yaf plugins (namespace：\)
 │   ├── presenters              # Object presenters (namespace：\App\Presenters)
 │   ├── services                # Services, the 3rd service bridges (namespace：\App\Services)
-│   └── traits                  # Traits (namespace：\App\Traits)
+│   ├── traits                  # Traits (namespace：\App\Traits)
+│   ├── views                   # Template files
 │   ├── helpers.php             # Herlpers
 │   ├── Bootstrap.php           # Yaf Bootstrap file
 ├── config
@@ -122,7 +122,7 @@ $ ./sora make:test Foo_Bar # Also supports multiple type controller names
 
 ### The handle() method
 
-Controller entry method is just one： `handle()`:
+The controller entry method `handle()`:
 
 ```php
 <?php
@@ -133,15 +133,48 @@ class ExampleController extends BaseController
     public function handle()
     {
         return 'Hello world!';
+        // return view('welcome', ['name' => 'MyApp']);
+        // return json(['foo' => 'bar']);
+        // return redirect('https://easywechat.com');
     }
 }
+
 ```
+   
+# Views
+
+The default we are using the template engine [Plates](http://platesphp.com/v3/), Plates is a native PHP template system that’s fast, easy to use and easy to extend.
+
+You can use `view(string $template, array $data)` helper in controller `handle` method as a result.
+
+for example: 
+
+```php
+    public function handle()
+    {
+        $data = [
+            'name' => 'overtrue',
+            'age' => 28,
+        ];
+
+        return view('profile-page', $data);
+    }
+```
+
+```html
+<!--app/views/profile-page.php:-->
+
+<h1><?= $name ?></h1>
+<p><?= $age ?></p>
+```
+
+More usage please read the [Plates Docs](http://platesphp.com/v3/).
 
 # Unit tests
 
 > The difficulty of writing unit tests is inversely proportional to the quality of your code. The higher the code quality, the lower the difficulty of unit testing, so design your code well.
 
-We mainly do the unit test of the controller, and the unit test for creating the controller can be done with the following command：
+The unit test for creating the controller can be done with the following command：
 
 ```shell
 $ ./sora make:test Foo_BarController
@@ -258,7 +291,8 @@ $this->server('REQUEST_URI', '/foo/bar');
 # Docs
 
 - Yaf Docs: http://www.php.net/manual/en/book.yaf.php
-- PHPUnit Docs：https://phpunit.de/manual/current/zh_cn/phpunit-book.html
+- Plates Docs: http://platesphp.com/v3/
+- PHPUnit Docs: https://phpunit.de/manual/current/zh_cn/phpunit-book.html
 - Mockery Docs: http://docs.mockery.io/en/latest/
 
 # License

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the overtrue/yaf-skeleton.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Support;
 
 class NamespacedItemResolver
@@ -14,7 +23,8 @@ class NamespacedItemResolver
     /**
      * Parse a key into namespace, group, and item.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return array
      */
     public function parseKey($key)
@@ -46,7 +56,8 @@ class NamespacedItemResolver
     /**
      * Parse an array of basic segments.
      *
-     * @param  array  $segments
+     * @param array $segments
+     *
      * @return array
      */
     protected function parseBasicSegments(array $segments)
@@ -63,17 +74,17 @@ class NamespacedItemResolver
         // If there is more than one segment in this group, it means we are pulling
         // a specific item out of a groups and will need to return the item name
         // as well as the group so we know which item to pull from the arrays.
-        else {
-            $item = implode('.', array_slice($segments, 1));
 
-            return [null, $group, $item];
-        }
+        $item = implode('.', array_slice($segments, 1));
+
+        return [null, $group, $item];
     }
 
     /**
      * Parse an array of namespaced segments.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return array
      */
     protected function parseNamespacedSegments($key)
@@ -93,9 +104,8 @@ class NamespacedItemResolver
     /**
      * Set the parsed value of a key.
      *
-     * @param  string  $key
-     * @param  array   $parsed
-     * @return void
+     * @param string $key
+     * @param array  $parsed
      */
     public function setParsedKey($key, $parsed)
     {

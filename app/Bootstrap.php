@@ -33,9 +33,9 @@ class Bootstrap extends YafBootstrap
     }
 
     /**
-     * autoload
+     * autoload.
      *
-     * @param  Dispatcher $dispatcher [description]
+     * @param Dispatcher $dispatcher [description]
      */
     public function _initLoader(Dispatcher $dispatcher)
     {
@@ -44,14 +44,13 @@ class Bootstrap extends YafBootstrap
     }
 
     /**
-     * Config file init
+     * @param \Yaf\Dispatcher $dispatcher
      *
-     * @param  Dispatcher $dispatcher [description]
+     * @throws \App\Exceptions\ErrorException
      */
     public function _initConfig(Dispatcher $dispatcher)
     {
-        // example
-        YafRegistry::set('config', new Yaf\Config\Ini(ROOT_PATH . '/config/config.ini'));
+        Config::createFromPath(ROOT_PATH.'/config');
     }
 
     /**
@@ -62,6 +61,7 @@ class Bootstrap extends YafBootstrap
     {
         $log = new \App\Services\Logger('yaf');
 
+        // 请自己配置日志
         //$log->setHandlers();
 
         YafRegistry::set(\App\Services\Logger::class, $log);
@@ -86,8 +86,8 @@ class Bootstrap extends YafBootstrap
             $dispatcher->registerPlugin(new ExceptionHandlerPlugin());
         }
 
-//        $dispatcher->registerPlugin(new TestPlugin());
-//        $dispatcher->registerPlugin(new AnotherPlugin());
+        $dispatcher->registerPlugin(new ViewRenderPlugin());
+//        $dispatcher->registerPlugin(new SamplePlugin);
 //        ...
     }
 

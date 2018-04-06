@@ -38,17 +38,17 @@ class ExceptionHandlerPlugin extends YafPlugin
      *
      * @param Throwable $e
      */
-    public function exceptionHandler(Throwable $e, $yafRequest, $yafResponse)
+    public function exceptionHandler(Throwable $e, $request, $response)
     {
-        //需要注意返回的是浏览器展示的异常，还是api展示的异常
         if ($e instanceof JsonSerializable) {
             $response = $e;
         } else {
-            $response = api_return($e->getMessage(), $e->getCode());
+            $response = [
+                'error_code' => $e->getCode(),
+                'error' => $e->getMessage(),
+            ];
         }
 
-        send_response($yafResponse, $response, 200);
-
-        $yafResponse->response();
+        send_response($response, 200);
     }
 }

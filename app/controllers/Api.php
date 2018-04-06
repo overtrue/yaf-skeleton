@@ -11,8 +11,6 @@ class ApiController extends BaseController
 
     public function handle()
     {
-        return api_return('ok', 0, [
-            'say' => 'hello world'
-        ]);
+        return ['say' => 'hello world'];
     }
 }

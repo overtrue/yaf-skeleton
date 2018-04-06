@@ -84,13 +84,19 @@ class Response implements ResponseInterface
         511 => 'Network Authentication Required',
     ];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $reasonPhrase = '';
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $statusCode = 200;
 
-    /** @var Http */
+    /**
+     * @var Http
+     */
     protected $yafResponse = null;
 
     /**
@@ -124,15 +130,14 @@ class Response implements ResponseInterface
     }
 
     /**
-     * 嵌入yaf原生Response，会影响本类渲染返回内容的逻辑
+     * 设置 YafResponse
      *
-     * @param Http $response
-     *
+     * @param $yafResponse
      * @return $this
      */
-    public function setYafResponse(Http $response)
+    public function setYafResponse(Http $yafResponse)
     {
-        $this->yafResponse = $response;
+        $this->yafResponse = $yafResponse;
 
         return $this;
     }
@@ -214,8 +219,6 @@ class Response implements ResponseInterface
 
         // status
         header(sprintf('HTTP/%s %s %s', $this->version, $this->statusCode, $this->getReasonPhrase()), true, $this->statusCode);
-
-        return $this;
     }
 
     /**
@@ -244,10 +247,18 @@ class Response implements ResponseInterface
         $this->sendHeaders();
         $this->sendContent();
 
-        if (!$this->yafResponse && function_exists('fastcgi_finish_request')) {
-            fastcgi_finish_request();
-        }
-
         return $this;
+    }
+
+    /**
+     * Is the response a redirect of some form?
+     *
+     * @param string|null $location
+     *
+     * @return bool
+     */
+    public function isRedirect(string $location = null)
+    {
+        return in_array($this->statusCode, array(201, 301, 302, 303, 307, 308)) && (null === $location ?: $location == $this->headers['Location']);
     }
 }
