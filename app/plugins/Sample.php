@@ -11,7 +11,7 @@ use Yaf\Response_Abstract as YafResponse;
  */
 /* plugin class should be placed under ./application/plugins/ */
 
-class TestPlugin extends YafPlugin
+class SamplePlugin extends YafPlugin
 {
     public function routerStartup(YafRequest $request, YafResponse $response)
     {
