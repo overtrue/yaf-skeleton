@@ -10,8 +10,8 @@
  */
 
 use App\Exceptions\ErrorException;
+use App\Services\Http\RedirectResponse;
 use App\Services\Http\Response;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Config 类的别名方法.
@@ -33,29 +33,36 @@ function config($property, $default = null)
 }
 
 /**
- * 输出响应内容.
+ * @param string $template
+ * @param array  $data
  *
- * @param array|string|ResponseInterface $body
- * @param int                            $status
- * @param array                          $headers
+ * @return string
  */
-function send_response($body, $status = 200, $headers = [])
+function view(string $template, array $data)
 {
-    if (defined('TESTING')) {
-        return;
-    }
+    $body = Registry::get('services.view')->render($template, (array) $data);
 
-    $headers = array_merge([
-        'content-type' => 'application/json;charset=utf-8',
-    ], $headers);
+    return new Response(200, ['text/html;charset=utf-8'], $body);
+}
 
-    if (!($body instanceof Response)) {
-        $body = new Response($status, $headers, $body);
-    }
+/**
+ * @param array|object|string $data
+ *
+ * @return \App\Services\Http\Response
+ */
+function json($data)
+{
+    return new Response(200, ['application/json;charset=utf-8'], json_encode($data));
+}
 
-    $body->send();
-
-    exit;
+/**
+ * @param string $targetUrl
+ *
+ * @return \App\Services\Http\RedirectResponse
+ */
+function redirect(string $targetUrl)
+{
+    return new RedirectResponse($targetUrl);
 }
 
 /**

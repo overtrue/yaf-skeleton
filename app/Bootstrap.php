@@ -11,7 +11,6 @@
 
 use Yaf\Bootstrap_Abstract as YafBootstrap;
 use Yaf\Dispatcher;
-use Yaf\Registry as YafRegistry;
 
 /**
  * Class Bootstrap.
@@ -33,25 +32,24 @@ class Bootstrap extends YafBootstrap
     }
 
     /**
-     * autoload
+     * autoload.
      *
-     * @param  Dispatcher $dispatcher [description]
+     * @param Dispatcher $dispatcher [description]
      */
     public function _initLoader(Dispatcher $dispatcher)
     {
         $loader = \Yaf\Loader::getInstance();
-        $loader->import(ROOT_PATH . '/vendor/autoload.php');
+        $loader->import(ROOT_PATH.'/vendor/autoload.php');
     }
 
     /**
-     * Config file init
+     * @param \Yaf\Dispatcher $dispatcher
      *
-     * @param  Dispatcher $dispatcher [description]
+     * @throws \App\Exceptions\ErrorException
      */
     public function _initConfig(Dispatcher $dispatcher)
     {
-        // example
-        YafRegistry::set('config', new Yaf\Config\Ini(ROOT_PATH . '/config/config.ini'));
+        Config::createFromPath(ROOT_PATH.'/config');
     }
 
     /**
@@ -72,6 +70,8 @@ class Bootstrap extends YafBootstrap
         } else {
             $dispatcher->registerPlugin(new ExceptionHandlerPlugin());
         }
+
+        $dispatcher->registerPlugin(new ViewRenderPlugin());
 
         //$dispatcher->registerPlugin(new AnotherPlugin());
         //...

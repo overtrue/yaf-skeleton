@@ -99,13 +99,12 @@ class Request
     }
 
     /**
-     * TODO 未完成
+     * TODO 未完成.
      *
      * @return [type] [description]
      */
-    public function filter ()
+    public function filter()
     {
-
     }
 
     /**

@@ -28,7 +28,9 @@ class ExceptionHandlerPlugin extends YafPlugin
      */
     public function preDispatch(YafRequest $request, YafResponse $response)
     {
-        set_exception_handler([$this, 'exceptionHandler']);
+        set_exception_handler(function ($e) use ($request, $response) {
+            $this->exceptionHandler($e, $request, $response);
+        });
     }
 
     /**
@@ -36,7 +38,7 @@ class ExceptionHandlerPlugin extends YafPlugin
      *
      * @param Throwable $e
      */
-    public function exceptionHandler(Throwable $e)
+    public function exceptionHandler(Throwable $e, $request, $response)
     {
         if ($e instanceof JsonSerializable) {
             $response = $e;
