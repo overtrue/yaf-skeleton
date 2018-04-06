@@ -30,7 +30,6 @@
   "require": {
     "php": ">=7.0",
     "ext-yaf": "*",
-    "ext-yaconf": "*",
     "psr/http-message": "~1.0",
     "symfony/console": "3.*",
     "monolog/monolog": "~1.0",
