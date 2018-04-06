@@ -51,8 +51,6 @@ class CodeStyleCommand extends Command
             $suffix = './app';
         }
 
-        $this->checkAndInstallAppStandard($phpcs);
-
         $commands = [
             "$phpcs --ignore=app/Bootstrap.php,app/Commands/ $suffix",
         ];

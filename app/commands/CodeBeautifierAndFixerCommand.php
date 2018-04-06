@@ -49,8 +49,6 @@ class CodeBeautifierAndFixerCommand extends Command
             $suffix = './app';
         }
 
-        $this->checkAndInstallAppStandard($phpcbf);
-
         $commands = [
             "$phpcbf --ignore=app/Bootstrap.php,app/Commands/ $suffix",
         ];
