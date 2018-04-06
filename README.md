@@ -161,8 +161,8 @@ for example:
     }
 ```
 
-```php
-//app/views/profile-page.php:
+```html
+<!--app/views/profile-page.php:-->
 
 <h1><?= $name ?></h1>
 <p><?= $age ?></p>
