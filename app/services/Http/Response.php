@@ -203,7 +203,7 @@ class Response implements ResponseInterface
         if ($this->yafResponse) {
             // headers
             foreach ($this->headers as $name => $values) {
-                foreach ($values as $value) {
+                foreach ((array) $values as $value) {
                     $this->yafResponse->setHeader($name, $value, false, $this->statusCode);
                 }
             }
@@ -211,7 +211,7 @@ class Response implements ResponseInterface
         } else {
             // headers
             foreach ($this->headers as $name => $values) {
-                foreach ($values as $value) {
+                foreach ((array) $values as $value) {
                     header($name.': '.$value, false, $this->statusCode);
                 }
             }
