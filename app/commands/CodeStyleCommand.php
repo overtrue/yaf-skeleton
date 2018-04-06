@@ -20,7 +20,6 @@ use Symfony\Component\Process\Process;
  */
 class CodeStyleCommand extends Command
 {
-
     protected $name = 'cs';
     protected $description = '检查代码规范.';
 
@@ -42,6 +41,7 @@ class CodeStyleCommand extends Command
 
         if (!file_exists($phpcs)) {
             $this->error('请先安装依赖：composer install -vvv');
+
             return 1;
         }
 

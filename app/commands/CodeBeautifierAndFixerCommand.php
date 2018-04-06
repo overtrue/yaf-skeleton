@@ -20,7 +20,6 @@ use Symfony\Component\Process\Process;
  */
 class CodeBeautifierAndFixerCommand extends Command
 {
-
     protected $name = 'cbf';
     protected $description = '修复代码规范.';
 

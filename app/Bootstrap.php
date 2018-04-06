@@ -40,7 +40,7 @@ class Bootstrap extends YafBootstrap
     public function _initLoader(Dispatcher $dispatcher)
     {
         $loader = \Yaf\Loader::getInstance();
-        $loader->import(ROOT_PATH . '/vendor/autoload.php');
+        $loader->import(ROOT_PATH.'/vendor/autoload.php');
     }
 
     /**
@@ -54,7 +54,8 @@ class Bootstrap extends YafBootstrap
     }
 
     /**
-     * 日志启动器
+     * 日志启动器.
+     *
      * @param Dispatcher $dispatcher
      */
     public function _initLogger(Dispatcher $dispatcher)
