@@ -291,7 +291,8 @@ $this->server('REQUEST_URI', '/foo/bar');
 # Docs
 
 - Yaf Docs: http://www.php.net/manual/en/book.yaf.php
-- PHPUnit Docs：https://phpunit.de/manual/current/zh_cn/phpunit-book.html
+- Plates Docs: http://platesphp.com/v3/
+- PHPUnit Docs: https://phpunit.de/manual/current/zh_cn/phpunit-book.html
 - Mockery Docs: http://docs.mockery.io/en/latest/
 
 # License
