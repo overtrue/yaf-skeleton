@@ -11,6 +11,7 @@
 
 use Yaf\Bootstrap_Abstract as YafBootstrap;
 use Yaf\Dispatcher;
+use Yaf\Registry as YafRegistry;
 
 /**
  * Class Bootstrap.
@@ -39,7 +40,7 @@ class Bootstrap extends YafBootstrap
     public function _initLoader(Dispatcher $dispatcher)
     {
         $loader = \Yaf\Loader::getInstance();
-        $loader->import(ROOT_PATH.'/vendor/autoload.php');
+        $loader->import(ROOT_PATH . '/vendor/autoload.php');
     }
 
     /**
@@ -50,6 +51,20 @@ class Bootstrap extends YafBootstrap
     public function _initConfig(Dispatcher $dispatcher)
     {
         Config::createFromPath(ROOT_PATH.'/config');
+    }
+
+    /**
+     * 日志启动器
+     * @param Dispatcher $dispatcher
+     */
+    public function _initLogger(Dispatcher $dispatcher)
+    {
+        $log = new \App\Services\Logger('yaf');
+
+        // 请自己配置日志
+        //$log->setHandlers();
+
+        YafRegistry::set(\App\Services\Logger::class, $log);
     }
 
     /**
@@ -72,9 +87,8 @@ class Bootstrap extends YafBootstrap
         }
 
         $dispatcher->registerPlugin(new ViewRenderPlugin());
-
-        //$dispatcher->registerPlugin(new AnotherPlugin());
-        //...
+//        $dispatcher->registerPlugin(new SamplePlugin);
+//        ...
     }
 
     /**

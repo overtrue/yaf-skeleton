@@ -1,4 +1,5 @@
 <?php
+namespace Yaf;
 
 /*
  * This file is part of the overtrue/yaf-skeleton.
@@ -9,8 +10,4 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Yaf;
-
-class Controller_Abstract
-{
-}
+class Abstract_Controller {}

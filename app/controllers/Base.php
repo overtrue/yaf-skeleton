@@ -9,7 +9,6 @@
  * with this source code in the file LICENSE.
  */
 
-use App\Exceptions\ApiException;
 use App\Presenters\PresenterInterface;
 use App\Services\Http\Response;
 use Psr\Http\Message\ResponseInterface;
@@ -94,11 +93,9 @@ abstract class BaseController extends YafController
     /**
      * 处理响应内容.
      *
-     * @param mixed $response
+     * @param callable|array|string|\Psr\Http\Message\ResponseInterface $response
      *
-     * @return string
-     *
-     * @throws ApiException
+     * @return mixed
      */
     protected function handleResponse($response)
     {
@@ -123,6 +120,8 @@ abstract class BaseController extends YafController
             $response = new Response(200, $this->headers, $response);
         }
 
+        //兼容Yaf的Response输出逻辑
+        $response->setYafResponse($this->getResponse());
         $response->send();
 
         return $response;

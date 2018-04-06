@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Services;
+
 /*
  * This file is part of the overtrue/yaf-skeleton.
  *
@@ -9,6 +11,7 @@
  * with this source code in the file LICENSE.
  */
 
-class Logger extends Monolog\Logger
+
+class Logger extends \Monolog\Logger
 {
 }
