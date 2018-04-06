@@ -36,7 +36,7 @@ function config($property, $default = null)
  * @param string $template
  * @param array  $data
  *
- * @return string
+ * @return string|Response
  */
 function view(string $template, array $data)
 {

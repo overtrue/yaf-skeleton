@@ -41,14 +41,15 @@ class ExceptionHandlerPlugin extends YafPlugin
     public function exceptionHandler(Throwable $e, $request, $response)
     {
         if ($e instanceof JsonSerializable) {
-            $response = $e;
+            $body = $e;
         } else {
-            $response = [
+            $body = [
                 'error_code' => $e->getCode(),
                 'error' => $e->getMessage(),
             ];
         }
 
-        send_response($response, 200);
+        json($body)->setYafResponse($response)->send();
+        $response->response();
     }
 }
