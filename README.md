@@ -18,10 +18,10 @@ yaf.use_spl_autoload=1
 ...
 ```
 
-2. Clone the repo to your www directory.
+2. Create project.
 
 ```shell
-$ git clone https://github.com/overtrue/yaf-skeleton.git myapp
+$ composer create-project overtrue/yaf-skeleton myapp -vvv
 ```
 
 3. Web server rewrite rules:
