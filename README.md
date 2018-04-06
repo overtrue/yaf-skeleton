@@ -6,7 +6,6 @@
 
 - PHP >= 7.0
 - Yaf >= 3.0
-- Yac >= 2.0
 
 # Installation
 
