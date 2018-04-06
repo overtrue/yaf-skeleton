@@ -20,7 +20,6 @@ use Symfony\Component\Process\Process;
  */
 class CodeStyleCommand extends Command
 {
-    use Traits\PhpCsEnvHelperTrait;
 
     protected $name = 'cs';
     protected $description = '检查代码规范.';
@@ -35,14 +34,15 @@ class CodeStyleCommand extends Command
     }
 
     /**
-     * @return int|void
+     * @return int|null
      */
     public function handle()
     {
         $phpcs = BASE_PATH.'/vendor/bin/phpcs';
 
         if (!file_exists($phpcs)) {
-            return $this->error('请先安装依赖：composer install -vvv');
+            $this->error('请先安装依赖：composer install -vvv');
+            return 1;
         }
 
         $suffix = $this->getCommandLine(true);
