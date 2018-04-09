@@ -143,7 +143,7 @@ class ExampleController extends BaseController
    
 # Views
 
-The default we are using the template engine [Plates](http://platesphp.com/v3/), Plates is a native PHP template system that’s fast, easy to use and easy to extend.
+The default we are using the template engine [Plates](http://platesphp.com/v3/), Plates is a native PHP template system that's fast, easy to use and easy to extend.
 
 You can use `view(string $template, array $data)` helper in controller `handle` method as a result.
 
