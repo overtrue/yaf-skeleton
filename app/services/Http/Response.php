@@ -95,7 +95,7 @@ class Response implements ResponseInterface
     private $statusCode = 200;
 
     /**
-     * @var Http
+     * @var YafResponse
      */
     protected $yafResponse = null;
 
