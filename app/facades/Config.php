@@ -21,10 +21,12 @@ class Config
     /**
      * @param string $name
      * @param null   $default
+     *
+     * @return mixed
      */
     public static function get(string $name, $default = null)
     {
-        return Registry::get('services.config')->get($name, $default);
+        return Registry::get('services.config')->get($name) ?? $default;
     }
 
     /**
