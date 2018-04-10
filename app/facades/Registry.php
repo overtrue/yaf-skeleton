@@ -44,12 +44,11 @@ class Registry extends Facade
      * 读取.
      *
      * @param string $key
-     * @param mixed  $default
      *
      * @return mixed
      */
-    public static function get($key, $default = null)
+    public static function get($key)
     {
-        return YafRegistry::get($key) ?: $default;
+        return YafRegistry::get($key);
     }
 }
