@@ -12,7 +12,7 @@ namespace App\Services;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Yaf\Registry;
+use Yaf\Registry as YafRegister;
 
 /**
  * Register Container
@@ -21,18 +21,6 @@ use Yaf\Registry;
  */
 class Register implements ContainerInterface
 {
-    /**
-     * 允许的命名空间.
-     */
-    const NAMESPACES = [
-        'services',
-        'session',
-        'setting',
-        'routing',
-        'http',
-        'testing'
-    ];
-
     /**
      * set instance
      *
@@ -43,13 +31,7 @@ class Register implements ContainerInterface
      */
     public function set($name, $instance)
     {
-        $prefix = strstr($name, '.', true);
-
-        if (!class_exists($name) && !in_array($prefix, self::NAMESPACES)) {
-            throw new \InvalidArgumentException("不合法的命名空间：$prefix");
-        }
-
-        Registry::set($name, $instance);
+        YafRegister::set($name, $instance);
 
         return $this;
     }
@@ -76,7 +58,7 @@ class Register implements ContainerInterface
      */
     public function get($name)
     {
-        return Registry::get($name);
+        return YafRegister::get($name);
     }
 
     /**
@@ -88,6 +70,6 @@ class Register implements ContainerInterface
      */
     public function has($name)
     {
-        return Registry::has($name);
+        return YafRegister::has($name);
     }
 }

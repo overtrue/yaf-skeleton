@@ -11,7 +11,6 @@
 
 use Yaf\Bootstrap_Abstract as YafBootstrap;
 use Yaf\Dispatcher;
-use Yaf\Registry as YafRegistry;
 use \App\Services\Register;
 
 /**
@@ -94,7 +93,8 @@ class Bootstrap extends YafBootstrap
         // 请自己配置日志
         //$log->setHandlers();
 
-        YafRegistry::set(\App\Services\Logger::class, $log);
+        $this->register->set(\App\Services\Logger::class, $log);
+        $this->register->alias('services.log', $log);
     }
 
     /**
