@@ -10,6 +10,7 @@
  */
 
 use Mockery\MockInterface;
+use \App\Services\Register;
 
 /**
  * 外观基类.
@@ -22,6 +23,21 @@ abstract class Facade
      * @var array
      */
     protected static $resolvedInstance;
+
+    /**
+     * @var Register
+     */
+    protected static $container;
+
+    /**
+     * start Facade
+     *
+     * @param Register $register
+     */
+    public static function init(Register $register)
+    {
+        static::$container = $register;
+    }
 
     /**
      * Hotswap the underlying instance behind the facade.
@@ -135,8 +151,8 @@ abstract class Facade
             return static::$resolvedInstance[$name];
         }
 
-        if (\Yaf\Registry::has($name)) {
-            return \Yaf\Registry::get($name);
+        if (static::$container->has($name)) {
+            return static::$container->get($name);
         }
 
         return static::$resolvedInstance[$name] = new $name();

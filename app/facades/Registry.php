@@ -13,42 +13,22 @@ use Yaf\Registry as YafRegistry;
 
 /**
  * class Registry.
+ *
+ * @method static get(string $name): mixed
+ * @method static set(string $name, mixed $instance): mixed
+ * @method static has(string $name): bool
  */
 class Registry extends Facade
 {
     /**
-     * 允许的命名空间.
-     */
-    const NAMESPACES = ['services', 'session', 'setting', 'routing', 'http', 'testing'];
-
-    /**
-     * 设定变量.
+     * Get the registered name of the component.
      *
-     * @param string $key
-     * @param mixed  $value
+     * @throws \RuntimeException
      *
-     * @return mixed
+     * @return string
      */
-    public static function set($key, $value)
+    protected static function getFacadeAccessor()
     {
-        $prefix = strstr($key, '.', true);
-
-        if (!in_array($prefix, self::NAMESPACES)) {
-            throw new InvalidArgumentException("不合法的命名空间：$prefix");
-        }
-
-        return YafRegistry::set($key, $value);
-    }
-
-    /**
-     * 读取.
-     *
-     * @param string $key
-     *
-     * @return mixed
-     */
-    public static function get($key)
-    {
-        return YafRegistry::get($key);
+        return 'services.register';
     }
 }

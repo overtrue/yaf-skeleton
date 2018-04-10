@@ -12,6 +12,7 @@
 use Yaf\Bootstrap_Abstract as YafBootstrap;
 use Yaf\Dispatcher;
 use Yaf\Registry as YafRegistry;
+use \App\Services\Register;
 
 /**
  * Class Bootstrap.
@@ -20,6 +21,11 @@ use Yaf\Registry as YafRegistry;
  */
 class Bootstrap extends YafBootstrap
 {
+    /**
+     * @var Register
+     */
+    protected $register;
+
     /**
      * 项目基本初始化操作.
      *
@@ -41,6 +47,29 @@ class Bootstrap extends YafBootstrap
     {
         $loader = \Yaf\Loader::getInstance();
         $loader->import(ROOT_PATH.'/vendor/autoload.php');
+    }
+
+    /**
+     * init container
+     * @param Dispatcher $dispatcher
+     */
+    public function _initContainer(Dispatcher $dispatcher)
+    {
+        // init Container
+        $this->register = $register = new Register();
+        $register->set(Register::class, $register);
+        $register->alias('services.register', $register);
+    }
+
+    /**
+     * init Facade
+     *
+     * @param Dispatcher $dispatcher
+     */
+    public function _initFacade(Dispatcher $dispatcher)
+    {
+        // inject Register Container
+        Facade::init($this->register);
     }
 
     /**
