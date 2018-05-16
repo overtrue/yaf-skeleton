@@ -24,33 +24,33 @@ $ composer create-project overtrue/yaf-skeleton myapp -vvv
 ```
 
 3. Web server rewrite rules:
-   
+
     #### Apache
-    
+
     ```conf
     #.htaccess
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule .* index.php
     ```
-    
+
     #### Nginx
-    
+
     ```
     server {
       listen 80;
       server_name  myapp.com;
       root   /path/to/myapp;
       index  index.php index.html index.htm;
-     
+
       if (!-e $request_filename) {
         rewrite ^/(.*)  /index.php/$1 last;
       }
     }
     ```
-    
+
     #### Lighttpd
-    
+
     ```
     $HTTP["host"] =~ "(www.)?myapp.com$" {
       url.rewrite = (
@@ -63,7 +63,7 @@ $ composer create-project overtrue/yaf-skeleton myapp -vvv
 # Application structor
 
 ```
-├── .scripts                
+├── .scripts
 │   ├── .gitkeep
 │   ├── common.sh
 │   ├── job_phpcs.sh
@@ -71,7 +71,7 @@ $ composer create-project overtrue/yaf-skeleton myapp -vvv
 │   ├── job_phpunit.sh
 │   ├── sami.phar
 │   └── sami.php
-├── app                     
+├── app
 │   ├── commands                # sora commands (namespace：\App\Commands)
 │   ├── controllers             # Yaf Controllers (namespace：\)
 │   ├── exceptions              # Exceptions (namespace：\App\Exceptions)
@@ -89,12 +89,12 @@ $ composer create-project overtrue/yaf-skeleton myapp -vvv
 │   └── index.php
 ├── sora                    # The command line tool
 ├── tests                   # Unit tests
-└── vendor                  # 
+└── vendor                  #
 ├── phpunit.xml.dist        # PHPUnit config file
 ├── .gitignore
 ├── .php_cs                 # PHP-CS-Fixer config file
-├── composer.json            
-├── composer.lock            
+├── composer.json
+├── composer.lock
 ├── README.md
 ```
 
@@ -103,8 +103,8 @@ $ composer create-project overtrue/yaf-skeleton myapp -vvv
 
 
 ```shell
-$ ./sora make:controller Foo_Bar # or：foo_bar/FooBar/FooBarController 
-# 
+$ ./sora make:controller Foo_Bar # or：foo_bar/FooBar/FooBarController
+#
 # /www/myapp/app/controllers/Foo/Bar.php Created!
 # /www/myapp/tests/controllers/Foo/BarTest.php Created!
 ```
@@ -128,7 +128,7 @@ The controller entry method `handle()`:
 <?php
 
 
-class ExampleController extends BaseController 
+class ExampleController extends BaseController
 {
     public function handle()
     {
@@ -140,14 +140,18 @@ class ExampleController extends BaseController
 }
 
 ```
-   
+
 # Views
 
-The default we are using the template engine [Plates](http://platesphp.com/v3/), Plates is a native PHP template system that's fast, easy to use and easy to extend.
+There is no built-in template engine. If you need to use a PHP template, we recommend that you use [Plates](http://platesphp.com/v3/), Plates is a native PHP template system that's fast, easy to use and easy to extend.
+
+```sh
+$ composer require league/plates -vvv
+```
 
 You can use `view(string $template, array $data)` helper in controller `handle` method as a result.
 
-for example: 
+for example:
 
 ```php
     public function handle()
@@ -188,7 +192,7 @@ To create a controller test object, use，you can use the `mock_controller` func
 $controller = mock_controller(Foo_BarController::class);
 
 // Indicates the method to mock, and the protected method is also mockable
-$controller = mock_controller(Foo_BarController::class, ['getUsers', 'getApp']); 
+$controller = mock_controller(Foo_BarController::class, ['getUsers', 'getApp']);
 ```
 
 ## Assertion
@@ -220,7 +224,7 @@ public function testHandle()
         'has_extend' => 1,
         'simplify' => 0,
         'is_encoded' => 0,
-        'foo' => 'bar', 
+        'foo' => 'bar',
     ];
 
     Request::shouldReceive('only')

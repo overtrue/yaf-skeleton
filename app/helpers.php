@@ -40,7 +40,13 @@ function config($property, $default = null)
  */
 function view(string $template, array $data)
 {
-    $body = Registry::get('services.view')->render($template, (array) $data);
+    $engine = Registry::get('services.view');
+
+    if (!$engine) {
+        abort('No template engine found.');
+    }
+
+    $body = $engine->render($template, (array) $data);
 
     return new Response(200, ['content-type' => 'text/html;charset=utf-8'], $body);
 }
