@@ -133,9 +133,9 @@ class ExampleController extends BaseController
     public function handle()
     {
         return 'Hello world!';
-        // return view('welcome', ['name' => 'MyApp']);
         // return json(['foo' => 'bar']);
         // return redirect('https://easywechat.com');
+        // return view('welcome', ['name' => 'MyApp']); // template engine require.
     }
 }
 
