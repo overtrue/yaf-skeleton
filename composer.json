@@ -54,7 +54,9 @@
     }
   },
   "suggest": {
-    "league/plates": "Plates is a native PHP template system that's fast, easy to use and easy to extend."
+    "league/plates": "Plates is a native PHP template system that's fast, easy to use and easy to extend.",
+    "illuminate/database": "The best PHP ORM Engine from Laravel.",
+    "illuminate/validatio": "The form validation component from Laravel.",
   },
   "license": "MIT"
 }
