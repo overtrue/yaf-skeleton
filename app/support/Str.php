@@ -37,18 +37,6 @@ class Str
     protected static $studlyCache = [];
 
     /**
-     * Transliterate a UTF-8 value to ASCII.
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public static function ascii($value)
-    {
-        return StaticStringy::toAscii($value);
-    }
-
-    /**
      * Convert a value to camel case.
      *
      * @param string $value
