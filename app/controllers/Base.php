@@ -109,7 +109,7 @@ abstract class BaseController extends YafController
 
         if (is_array($response)) {
             $response = json_encode($response);
-            $this->header('Content-Type: application/json;charset=utf-8');
+            $this->header('Content-Type', 'application/json;charset=utf-8');
         }
 
         if (defined('TESTING')) {
@@ -121,7 +121,7 @@ abstract class BaseController extends YafController
         }
 
         //兼容Yaf的Response输出逻辑
-        $response->setYafResponse($this->getResponse());
+        // $response->setYafResponse($this->getResponse());
         $response->send();
 
         return $response;
