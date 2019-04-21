@@ -115,10 +115,6 @@ class Bootstrap extends YafBootstrap
         } else {
             $dispatcher->registerPlugin(new ExceptionHandlerPlugin());
         }
-
-        $dispatcher->registerPlugin(new ViewRenderPlugin());
-//        $dispatcher->registerPlugin(new SamplePlugin);
-//        ...
     }
 
     /**
