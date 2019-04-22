@@ -9,9 +9,10 @@
  * with this source code in the file LICENSE.
  */
 
+use App\Services\Register;
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Yaf\Bootstrap_Abstract as YafBootstrap;
 use Yaf\Dispatcher;
-use \App\Services\Register;
 
 /**
  * Class Bootstrap.
@@ -48,8 +49,19 @@ class Bootstrap extends YafBootstrap
         $loader->import(ROOT_PATH.'/vendor/autoload.php');
     }
 
+    public function _initDatabase()
+    {
+        $this->config = Yaf\Application::app()->getConfig();
+        $capsule = new Capsule();
+        $capsule->addConnection($this->config->database->toArray());
+        $capsule->setAsGlobal();
+        $capsule->bootEloquent();
+        class_alias('\Illuminate\Database\Capsule\Manager', 'DB');
+    }
+
     /**
-     * init container
+     * init container.
+     *
      * @param Dispatcher $dispatcher
      */
     public function _initContainer(Dispatcher $dispatcher)
@@ -61,7 +73,7 @@ class Bootstrap extends YafBootstrap
     }
 
     /**
-     * init Facade
+     * init Facade.
      *
      * @param Dispatcher $dispatcher
      */

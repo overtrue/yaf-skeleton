@@ -15,7 +15,8 @@
       "App\\Presenters\\": "app/presenters",
       "App\\Traits\\": "app/traits",
       "App\\Exceptions\\": "app/exceptions",
-      "App\\Support\\": "app/support"
+      "App\\Support\\": "app/support",
+      "App\\Models\\": "app/models"
     },
     "files": [
       "app/helpers.php",
@@ -33,7 +34,8 @@
     "psr/http-message": "~1.0",
     "symfony/console": "3.*",
     "monolog/monolog": "~1.0",
-    "psr/container": "^1.0"
+    "psr/container": "^1.0",
+    "illuminate/database": "5.5.*"
   },
   "require-dev": {
     "mockery/mockery": "~1.0",

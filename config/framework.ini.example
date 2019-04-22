@@ -1,0 +1,14 @@
+[product]
+application.directory = APP_PATH
+application.bootstrap = APP_PATH "/Bootstrap.php"
+application.dispatcher.throwException = false
+application.dispatcher.catchException = false
+application.dispatcher.defaultRoute.type = "map"
+application.dispatcher.defaultRoute.controllerPrefer = true
+
+database.driver = mysql
+database.host = 127.0.0.1
+database.port = 3306
+database.database = muwenyedu
+database.username = root
+database.password = 526937
