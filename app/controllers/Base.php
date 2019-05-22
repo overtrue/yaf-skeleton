@@ -109,7 +109,7 @@ abstract class BaseController extends YafController
 
         if (is_array($response)) {
             $response = json_encode($response);
-            $this->header('Content-Type: application/json;charset=utf-8');
+            $this->header('Content-Type', 'application/json;charset=utf-8');
         }
 
         if (defined('TESTING')) {
