@@ -28,6 +28,17 @@ class Config
     {
         return Registry::get('services.config')->get($name) ?? $default;
     }
+    
+    /**
+     * @param string $name
+     * @param mixed   $value
+     *
+     * @return mixed
+     */
+    public static function set(string $name, $value)
+    {
+        return Registry::get('services.config')->set($name, $value);
+    }
 
     /**
      * @param string $name
