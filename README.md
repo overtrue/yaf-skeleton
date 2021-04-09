@@ -203,7 +203,7 @@ We have such a controller:
     ...
     public function handle()
     {
-        $params = Reuqest::only('uids', 'screen_name', 'trim_status', 'has_extend', 'simplify', 'is_encoded');
+        $params = Request::only('uids', 'screen_name', 'trim_status', 'has_extend', 'simplify', 'is_encoded');
 
         $users = $this->get('main.users.show_batch', $params);
 
